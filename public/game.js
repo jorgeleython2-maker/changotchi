@@ -130,7 +130,7 @@ function endGame(isWin, reason) {
 
 function initializeGame() {
     state = { mcap: CONFIG.START_MCAP, hype: 80, faith: 70, fud: 10, isRunning: false, isOver: false, isCoolingDown: false };
-    logEvent("Press any button to play as Kuro..."); updateUI();
+    logEvent("Press any button to play with Kuro..."); updateUI();
 }
 
 // --- НАЗНАЧЕНИЕ КНОПОК И ЗАПУСК ---
