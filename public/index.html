@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>pumpgotchi</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="game_shop.css">
+  <link rel="stylesheet" href="game_chart_bg.css">
+  <link rel="stylesheet" href="game_plus.css">
+</head>
+
+<body>
+  <!-- Added home screen section before game -->
+  <div id="home-screen" class="home-screen">
+    <div class="home-background" id="homeBackgroundContainer"></div>
+    
+    <div class="home-content">
+      <!-- Imagen de fondo se maneja en CSS, pero si quieres una <img> explícita, puedes agregar aquí -->
+      <!-- <img src="fondo.png" alt="Imagen de fondo" class="background-image"> -->
+      
+      <button class="play-button" id="playButton" onclick="startGame()">
+        <img id="playButtonImage" src="dogito.png" alt="Play Button" />
+      </button>
+    </div>
+  </div>
+
+  <!-- Game screen (initially hidden) -->
+  <div id="game-screen" class="game-screen hidden">
+    <!-- компактный топбар (не ломает разметку) -->
+    <div id="ux-topbar" class="ux-topbar">
+      <div class="brand">pumpgotchi</div>
+      <div class="spacer"></div>
+      <button id="ux-fullscreen" class="chip square" title="Fullscreen">⤢</button>
+    </div>
+
+    <div id="game-container">
+      <div id="game-window">
+        <div id="screen">
+          <!-- layers -->
+          <div class="vignette"></div>
+          <div class="crt-scanline"></div>
+          <div class="grid"></div>
+          <div class="stars"></div>
+
+          <div id="market-cap" class="hud-text">MCAP: $0</div>
+
+          <!-- 🎨 ПЕРСОНАЖ РЕПЛЕЙСЕННЫЙ ПОР ИЗОБРАЖЕНИЕМ -->
+          <div id="alon-character">
+            <img src="kuro.png" alt="Pumpgotchi Character">
+          </div>
+
+          <div id="event-log" class="hud-text"></div>
+        </div>
+
+        <div id="ui-panel">
+          <div id="stats-panel">
+            <div class="stat">
+              <label>HYPE</label>
+              <div class="bar-container"><div id="hype-bar" class="bar"></div></div>
+            </div>
+            <div class="stat">
+              <label>FAITH</label>
+              <div class="bar-container"><div id="faith-bar" class="bar"></div></div>
+            </div>
+            <div class="stat">
+              <label>FUD</label>
+              <div class="bar-container"><div id="fud-bar" class="bar fud"></div></div>
+            </div>
+          </div>
+
+          <div id="actions-panel">
+            <button id="action-shill" class="pixel-btn" data-beep><span>1</span> Shill on X</button>
+            <button id="action-ama" class="pixel-btn" data-beep><span>2</span> Do shit</button>
+            <button id="action-ban" class="pixel-btn" data-beep><span>3</span> Ignore FUD</button>
+            <button id="action-contest" class="pixel-btn" data-beep><span>4</span> Build...</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- футер -->
+  <footer id="page-footer">
+    <a href="https://x.com/pumpgotchi" target="_blank" rel="noreferrer">Twitter</a>
+    <span>|</span>
+    <a href="https://pump.fun/coin/Gq91iCZp9i8YTPVSNSDMc4TDrPdBEM6qHdiSX8Yspump" target="_blank" rel="noreferrer">ChanGotchi Token</a>
+  </footer>
+
+  <div id="win-screen" class="hidden final-screen">
+    <h1>TO THE MOON!</h1>
+    <p>You've reached $1,000,000 MCAP!</p>
+    <button class="pixel-btn" onclick="goHome()">Go Home</button>
+  </div>
+  <div id="lose-screen" class="hidden final-screen">
+    <h1>RUGPULL!</h1>
+    <p id="lose-reason"></p>
+    <button class="pixel-btn" onclick="goHome()">Go Home</button>
+  </div>
+
+  <!-- scripts -->
+  <script src="game-home.js"></script>
+  <script src="game.js"></script>
+  <script src="game_dop.js"></script>
+  <script src="game_shop.js"></script>
+  <script src="game_chart_bg.js"></script>
+  <script src="game_market_drift.js"></script>
+  <script src="game_plus.js"></script>
+</body>
+</html>
