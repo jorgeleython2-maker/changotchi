@@ -1,0 +1,994 @@
+@import url("css2.html");
+
+:root {
+  /* Improved feminine luxury color palette */
+  --primary-blush: #fce4ec;
+  --primary-rose: #f8bbd0;
+  --primary-mauve: #e1bee7;
+  --primary-lavender: #d1c4e9;
+  --primary-cream: #faf8f5;
+  --accent-coral: #f48fb1;
+  --accent-rose: #ec407a;
+  --accent-purple: #ab47bc;
+  --accent-plum: #8e24aa;
+  --text-dark: #5e3a5e;
+  --text-light: #ffffff;
+  --gold: #f4c47c;
+  --border-soft: #ddbdd8;
+  --white: #fff;
+  --grey-hair: #c5b3c8;
+  --skin: #f5d5c5;
+  --snake-green: #b5e8c5;
+  --stat-green: #81c784;
+  --stat-red: #f5a5b0;
+  --desk-brown: #d4c5b5;
+}
+
+* {
+  box-sizing: border-box;
+}
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+body {
+  /* Luxurious gradient background */
+  background: linear-gradient(135deg, #fef5f8 0%, #f3e5f5 50%, #ede7f6 100%);
+  font-family: "Press Start 2P", cursive;
+  color: var(--text-dark);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  image-rendering: pixelated;
+}
+
+/* Topbar with soft styling */
+.ux-topbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  border-bottom: 3px solid var(--border-soft);
+  background: rgba(245, 212, 232, 0.6);
+  backdrop-filter: blur(8px);
+  border-radius: 0 0 20px 20px;
+}
+
+.ux-topbar .brand {
+  letter-spacing: 1px;
+  text-shadow: 0 2px 4px rgba(107, 91, 127, 0.15);
+  color: var(--accent-rose);
+  font-weight: bold;
+}
+
+.ux-topbar .spacer {
+  flex: 1;
+}
+
+.chip {
+  font: inherit;
+  color: var(--text-light);
+  background: linear-gradient(135deg, var(--accent-rose), var(--accent-coral));
+  border: 2px solid var(--accent-rose);
+  padding: 6px 10px;
+  cursor: pointer;
+  border-radius: 12px;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 8px rgba(232, 76, 122, 0.2);
+}
+
+.chip:hover {
+  background: linear-gradient(135deg, var(--accent-coral), var(--accent-rose));
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(232, 76, 122, 0.3);
+}
+
+.chip.square {
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+}
+
+/* Game window with soft borders and rounded corners */
+#game-container {
+  flex: 1;
+  display: grid;
+  place-items: center;
+  padding: 10px;
+}
+
+#game-window {
+  width: min(1100px, 96vw);
+  aspect-ratio: 4 / 3;
+  border: 6px solid var(--border-soft);
+  background: var(--primary-cream);
+  box-shadow: 0 20px 40px rgba(107, 91, 127, 0.1), inset 0 0 30px rgba(255, 255, 255, 0.8);
+  display: grid;
+  grid-template-rows: 60% 40%;
+  overflow: hidden;
+  position: relative;
+  border-radius: 30px;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* Screen with soft background */
+#screen {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(180deg, #fef9f6 0%, #f8eef3 100%);
+  border-radius: 20px 20px 0 0;
+}
+
+.vignette {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  box-shadow: inset 0 0 80px rgba(216, 169, 211, 0.15);
+  border-radius: 20px 20px 0 0;
+}
+
+.crt-scanline {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.08) 50%, rgba(255, 255, 255, 0) 50%);
+  background-size: 100% 4px;
+  mix-blend-mode: overlay;
+  border-radius: 20px 20px 0 0;
+}
+
+.grid {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(var(--border-soft) 1px, transparent 1px) 0 0 / 100% 18px,
+    linear-gradient(90deg, var(--border-soft) 1px, transparent 1px) 0 0 / 18px 100%;
+  opacity: 0.12;
+  border-radius: 20px 20px 0 0;
+}
+
+.stars {
+  position: absolute;
+  inset: -200% -200%;
+  background: radial-gradient(2px 2px at 20% 10%, #c9b5e8 50%, transparent 51%),
+    radial-gradient(1px 1px at 70% 30%, #c9b5e8 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 40% 70%, #c9b5e8 50%, transparent 51%);
+  animation: drift 60s linear infinite;
+  opacity: 0.15;
+}
+
+@keyframes drift {
+  to {
+    transform: translate3d(-10%, -10%, 0);
+  }
+}
+
+/* — Character — */
+/* Character with softer animations */
+#alon-character {
+  position: absolute;
+  z-index: 5;
+  bottom: 4px;
+  left: 50%;
+  width: 140px;
+  height: 240px;
+  transform-origin: bottom center;
+  animation: idle-breath 4s ease-in-out infinite;
+}
+
+@keyframes idle-breath {
+  0%,
+  100% {
+    transform: translateX(-50%) scale(1.6) translateY(0);
+  }
+  50% {
+    transform: translateX(-50%) scale(1.6) translateY(-2px);
+  }
+}
+
+.part {
+  position: absolute;
+}
+.head {
+  top: 0;
+  left: 0;
+  width: 0%;
+  height: 100px;
+}
+.bandana-yellow {
+  top: 0;
+  left: 14px;
+  width: 100px;
+  height: 96px;
+  background: var(--yellow);
+  box-shadow: inset 0 -6px 0 #d3c22f;
+}
+.bandana-black {
+  top: 0;
+  left: 74px;
+  width: 54px;
+  height: 96px;
+  background: var(--black);
+}
+.gadsden-snake {
+  top: 12px;
+  left: 18px;
+  width: 16px;
+  height: 24px;
+  background: var(--snake-green);
+}
+.hair {
+  top: 64px;
+  left: 0;
+  width: 128px;
+  height: 80px;
+  background: var(--grey-hair);
+}
+.face {
+  top: 80px;
+  left: 16px;
+  width: 96px;
+  height: 72px;
+  background: var(--skin);
+}
+.nose {
+  top: 30px;
+  left: 44px;
+  width: 8px;
+  height: 10px;
+  background: rgba(0, 0, 0, 0.1);
+}
+.glasses {
+  top: 78px;
+  left: 8px;
+  width: 112px;
+  height: 40px;
+  background: var(--white);
+  border: 2px solid var(--black);
+  box-sizing: border-box;
+}
+.lens {
+  top: 4px;
+  width: 40px;
+  height: 28px;
+  background: var(--black);
+}
+.lens.left {
+  left: 8px;
+}
+.lens.right {
+  right: 8px;
+}
+.mouth {
+  bottom: 16px;
+  left: 36px;
+  width: 24px;
+  height: 4px;
+  background: var(--black);
+}
+.body {
+  top: 152px;
+  left: 10px;
+  width: 108px;
+  height: 100px;
+}
+.shirt {
+  top: 0;
+  left: 10px;
+  width: 88px;
+  height: 80px;
+  background: var(--white);
+  color: var(--black);
+  font-size: 8px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  line-height: 1.2;
+  border: 2px solid var(--black);
+}
+.shirt-text {
+  display: block;
+}
+.arm {
+  width: 18px;
+  height: 60px;
+  background-color: var(--skin);
+  top: 5px;
+}
+.arm.left {
+  left: -4px;
+}
+.arm.right {
+  right: -4px;
+}
+.desk {
+  background: var(--desk-brown);
+  bottom: 0;
+  left: -20px;
+  width: 170px;
+  height: 30px;
+  border-top: 5px solid #5a4536;
+}
+
+/* — State anims — */
+#alon-character.shill {
+  animation: shill-anim .2s linear infinite, idle-breath 4s ease-in-out infinite;
+}
+@keyframes shill-anim {
+  0% {
+    transform: translateX(-50%) scale(2.1);
+  }
+  50% {
+    transform: translateX(-51%) scale(2.1);
+  }
+}
+#alon-character.shill .arm {
+  transform: translateY(-3px);
+}
+#alon-character.ban .glasses {
+  animation: ban-glare .2s forwards;
+}
+@keyframes ban-glare {
+  50% {
+    box-shadow: -10px -5px 10px var(--white);
+  }
+  100% {
+    box-shadow: none;
+  }
+}
+#alon-character.ama .head {
+  transform: translateY(-2px);
+}
+
+/* — HUD — */
+/* HUD text with soft styling */
+.hud-text {
+  position: absolute;
+  z-index: 3;
+  color: var(--text-dark);
+  padding: 8px;
+  font-size: 0.95em;
+  text-shadow: 2px 2px 4px rgba(100, 43, 87, 80%);
+  width: auto;
+  pointer-events: none;
+}
+
+#market-cap {
+  top: 8px;
+  left: 8px;
+  width: auto;
+  background: rgba(245, 212, 232, 0.7);
+  padding: 6px 10px;
+  border: 2px solid var(--border-soft);
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(107, 91, 127, 0.15);
+}
+
+#market-cap.increase {
+  color: var(--stat-green);
+}
+#market-cap.decrease {
+  color: var(--stat-red);
+}
+
+#event-log {
+  bottom: 8px;
+  left: 0;
+  right: 0;
+  color: var(--accent-rose);
+  font-size: 0.9em;
+  text-align: center;
+}
+
+#event-log.good {
+  color: var(--stat-green) !important;
+}
+#event-log.bad {
+  color: var(--stat-red) !important;
+}
+
+/* — Bottom UI (компактнее) — */
+/* Bottom UI panel with soft design */
+#ui-panel {
+  background: linear-gradient(135deg, #f5d4e8 0%, #e8d5f2 100%);
+  border-top: 6px solid var(--border-soft);
+  padding: 12px 14px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+  border-radius: 0 0 20px 20px;
+  box-shadow: 0 -4px 12px rgba(107, 91, 127, 0.1);
+}
+
+#stats-panel {
+  display: grid;
+  gap: 10px;
+}
+
+.stat {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.stat label {
+  width: 86px;
+  text-shadow: 0 2px 2px rgba(255, 255, 255, 0.5);
+  font-size: 0.85em;
+  color: var(--text-dark);
+}
+
+.bar-container {
+  flex: 1;
+  height: 18px;
+  border: 2px solid var(--accent-coral);
+  border-radius: 10px;
+  background: #fef9f6;
+  padding: 2px;
+  overflow: hidden;
+  box-shadow: inset 0 2px 4px rgba(245, 165, 197, 0.2);
+}
+
+.bar {
+  height: 100%;
+  width: 50%;
+  background: linear-gradient(90deg, var(--accent-coral), var(--accent-rose));
+  position: relative;
+  transition: width 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+  border-radius: 8px;
+}
+
+.bar::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0 10px, transparent 10px 20px);
+  mix-blend-mode: overlay;
+  animation: stripes 1.6s linear infinite;
+  border-radius: 8px;
+}
+
+@keyframes stripes {
+  to {
+    transform: translateX(20px);
+  }
+}
+
+.bar.fud {
+  background: linear-gradient(90deg, var(--stat-red), #f5b0bf);
+}
+
+#actions-panel {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+/* — Pixel buttons — */
+/* Pixel buttons with soft styling */
+.pixel-btn {
+  position: relative;
+  font: inherit;
+  color: var(--text-light);
+  background: linear-gradient(135deg, var(--accent-rose), var(--accent-coral));
+  border: 2px solid var(--accent-coral);
+  padding: 12px 14px;
+  cursor: pointer;
+  text-align: center;
+  box-shadow: 0 6px 12px rgba(232, 76, 122, 0.2), inset 0 -3px 0 rgba(232, 76, 122, 0.3);
+  transition: all 0.08s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: center;
+  border-radius: 14px;
+}
+
+.pixel-btn span {
+  display: inline-grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border: 2px solid var(--text-light);
+  background: rgba(255, 255, 255, 0.3);
+  font-size: 0.75em;
+  border-radius: 6px;
+  color: var(--text-light);
+}
+
+.pixel-btn:hover {
+  filter: brightness(1.08);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(232, 76, 122, 0.25), inset 0 -3px 0 rgba(232, 76, 122, 0.3);
+}
+
+.pixel-btn:active {
+  transform: translateY(0px);
+  box-shadow: 0 2px 6px rgba(232, 76, 122, 0.15), inset 0 -1px 0 rgba(232, 76, 122, 0.3);
+}
+
+.pixel-btn:disabled {
+  filter: opacity(0.6);
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* — Footer — */
+/* Footer with soft styling */
+#page-footer {
+  text-align: center;
+  padding: 12px;
+  font-size: 12px;
+  color: var(--text-dark);
+  border-top: 3px solid var(--border-soft);
+  box-shadow: 0 -4px 12px rgba(107, 91, 127, 0.1);
+  background: linear-gradient(180deg, rgba(245, 212, 232, 0.6), rgba(232, 213, 242, 0.6));
+  backdrop-filter: blur(8px);
+}
+
+#page-footer a {
+  color: var(--accent-rose);
+  text-decoration: none;
+  font-weight: bold;
+}
+
+#page-footer a:hover {
+  color: var(--accent-coral);
+  text-shadow: 0 0 4px rgba(232, 76, 122, 0.3);
+}
+
+/* — Finals — */
+/* Final screens with soft styling */
+.final-screen {
+  z-index: 100;
+  position: fixed;
+  inset: 0;
+  background: rgba(245, 212, 232, 0.95);
+  display: grid;
+  place-items: center;
+  text-align: center;
+  gap: 10px;
+  backdrop-filter: blur(8px);
+  border-radius: 20px;
+}
+
+.final-screen h1 {
+  font-size: 2.1em;
+  margin: 0 0 10px;
+  color: var(--text-dark);
+}
+
+#win-screen h1 {
+  color: var(--accent-rose);
+  text-shadow: 0 4px 12px rgba(232, 76, 122, 0.2);
+}
+
+#lose-screen h1 {
+  color: var(--stat-red);
+  text-shadow: 0 4px 12px rgba(245, 165, 176, 0.2);
+}
+
+/* — Медиа-компакт — */
+@media (max-width: 900px) {
+  #game-window {
+    width: 98vw;
+    grid-template-rows: 58% 42%;
+  }
+  .stat label {
+    width: 72px;
+    font-size: 0.8em;
+  }
+  #actions-panel {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* — Transparent header + square buttons — */
+.ux-topbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  background: transparent; /* прозрачный хедер */
+  border-bottom: none; /* убираем линию */
+  backdrop-filter: none; /* без блюра */
+}
+
+.ux-topbar .brand {
+  letter-spacing: 1px;
+  text-shadow: 0 2px 0 #000;
+  text-transform: lowercase;
+  margin-left: 14px; /* стилистика под pumpgotchi */
+}
+
+/* базовый стиль кнопки */
+.chip {
+  font: inherit;
+  color: #e9efff;
+  background: transparent;
+  border: 2px solid var(--border);
+  cursor: pointer;
+  box-shadow: 0 2px 0 #19443b, inset 0 -2px 0 #0b1330;
+  transition: transform .06s ease, filter .06s ease;
+}
+
+/* квадратная форма и выравнивание иконки */
+.chip.square {
+  width: 40px;
+  height: 40px;
+  padding: 0; /* 1:1 квадрат */
+  border-radius: 0; /* острые углы */
+  display: grid;
+  place-items: center; /* иконка по центру */
+}
+
+/* отклик */
+.chip:hover {
+  filter: brightness(1.12);
+}
+.chip:active {
+  transform: translateY(1px);
+}
+
+/* при узких экранах делаем кнопки чуточку меньше */
+@media (max-width: 900px) {
+  .chip.square {
+    width: 36px;
+    height: 36px;
+  }
+}
+
+/* === Layout tweak: smaller game window, bigger footer === */
+
+/* Чуть меньше окно игры + ограничение по высоте экрана */
+#game-window {
+  width: min(900px, 88vw); /* было ~1100px — делаем компактнее */
+  max-height: 70vh; /* чтобы не «давило» по вертикали */
+  margin-block: 6px 0; /* меньше пустот сверху/снизу */
+  grid-template-rows: 56% 44%; /* чутка больше места нижней панели */
+}
+
+/* Контейнер — компактнее паддинги, чтобы композиция не «плыла» */
+#game-container {
+  padding: 6px 10px;
+  /* color: var(--ui-dark-blue) */
+}
+
+/* Увеличим футер: больше воздуха и читабельнее текст */
+#page-footer {
+  font-size: 14px; /* было ~12px */
+  padding: 18px 16px; /* больше вертикального ритма */
+  line-height: 1.6; /* читабельность */
+  border-top-width: 4px; /* пиксельная рамка мощнее */
+  box-shadow: 0 -3px 0 #0e1633;
+  background: repeating-linear-gradient(0deg, #ffffff 0 4px, #f2b9ff 4px 8px); /* сохраняем пиксельный вайб */
+}
+
+/* На очень узких экранах делаем окно ещё компактнее */
+@media (max-width: 900px) {
+  #game-window {
+    width: 94vw;
+    max-height: 64vh;
+    grid-template-rows: 54% 46%;
+  }
+  #page-footer {
+    font-size: 13px;
+    padding: 16px 14px;
+  }
+}
+
+/* ===== Character: zoom-out + details from reference ===== */
+
+/* Сдвигаем персонажа дальше (меньше скейл) и даём лёгкую «дышалку» */
+
+/* Общие кирпичики */
+.part {
+  position: absolute;
+}
+.head {
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 30px;
+}
+
+/* — Шапка «DON'T TREAD ON ME» —
+
+/* Чуть компактнее HUD, чтобы персонаж «дышал» */
+#market-cap {
+  top: 6px;
+  left: 6px;
+  padding: 5px 7px;
+}
+#event-log {
+  bottom: 6px;
+  font-size: .88em;
+}
+
+/* экран — контейнер слоёв */
+#screen {
+  position: relative;
+}
+
+/* чарт — строго самый нижний слой внутри #screen */
+#bg-chart {
+  position: absolute;
+  inset: 0;
+  z-index: 0 !important; /* ниже всех */
+  filter: blur(2px) opacity(0.55);
+  image-rendering: pixelated;
+  pointer-events: none;
+}
+
+/* фоновые декоративные слои — поверх чарта, но ниже персонажа */
+#screen .grid,
+#screen .stars,
+#screen .crt-scanline,
+#screen .vignette {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* персонаж и HUD — гарантированно выше */
+#alon-character,
+#alon8,
+.hud-text,
+#market-cap,
+#event-log {
+  position: relative;
+  z-index: 5; /* над чартом и фоном */
+}
+
+/* магазин — над всем (на случай конфликтов) */
+#shop-modal {
+  z-index: 2147483647;
+}
+
+:root {
+  --hero-down: 16px;
+} /* увеличь/уменьши по вкусу */
+
+#alon-character,
+#alon8 {
+  bottom: calc(0px - var(--hero-down)) !important; /* опустить ниже */
+}
+
+/* чтобы модалка магазина всё равно была выше всех */
+#shop-modal {
+  z-index: 2147483647;
+}
+
+/* === Force hero to the bottom, override everything === */
+:root {
+  --hero-scale: 0.5; /* уменьши если ещё высоко (например 1.15) */
+  --hero-offset: 141px; /* отступ от нижней кромки */
+}
+
+/* родитель якорный */
+#screen {
+  position: relative !important;
+}
+
+/* сам герой */
+#alon-character,
+#alon8 {
+  position: absolute !important;
+  left: 43% !important;
+  bottom: var(--hero-offset) !important;
+  transform: translateX(-50%) scale(var(--hero-scale)) !important;
+  transform-origin: bottom center !important;
+  z-index: 5 !important;
+}
+
+/* переопределяем анимацию, чтобы она НЕ поднимала вверх */
+@keyframes idle-breath_fixed {
+  0%,
+  100% {
+    transform: translateX(-50%) scale(var(--hero-scale)) translateY(0);
+  }
+  50% {
+    transform: translateX(-50%) scale(var(--hero-scale)) translateY(-1px);
+  } /* едва заметно */
+}
+
+/* навешиваем нашу анимацию и глушим старую */
+#alon-character,
+#alon8 {
+  animation: idle-breath_fixed 4s ease-in-out infinite !important;
+}
+
+/* на случай если где-то задано translateY в вложенных состояниях */
+#alon-character.shill,
+#alon-character.ama,
+#alon-character.ban,
+#alon8.shill,
+#alon8.ama,
+#alon8.ban {
+  transform: translateX(-50%) scale(var(--hero-scale)) translateY(0) !important;
+}
+
+/* === починить растянутый MCAP === */
+#market-cap {
+  position: absolute !important;
+  top: 6px !important;
+  left: 6px !important;
+  display: inline-block !important; /* не растягиваемся на всю ширину */
+  width: auto !important;
+  padding: 4px 6px !important;
+  border: 2px solid var(--border, #ddbdd8) !important;
+  background: #ffc3c3 !important;
+  z-index: 4 !important; /* над чартом, но не перекрывает героя */
+}
+
+/* если где-то задано .hud-text { width:100% }, перебиваем: */
+.hud-text {
+  width: auto !important;
+}
+
+/* ===== Stacking order: log above hero ===== */
+#screen {
+  position: relative !important;
+}
+
+/* герой остаётся снизу экрана */
+#alon-character,
+#alon8 {
+  z-index: 5 !important;
+}
+
+/* лог поверх героя */
+#event-log {
+  position: absolute !important;
+  left: 50% !important;
+  bottom: 6px !important;
+  transform: translateX(-50%) !important;
+  max-width: calc(100% - 24px) !important;
+  width: auto !important;
+  text-align: center !important;
+  z-index: 6 !important; /* ↑ выше, чем у героя */
+  pointer-events: none !important;
+}
+
+/* на всякий случай — магазин всегда поверх всего */
+#shop-modal {
+  z-index: 2147483647 !important;
+}
+
+/* Home screen styles */
+.home-screen {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: linear-gradient(135deg, #ffffff 0%, #ffffff 50%, #ffffff 100%);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 999;
+}
+
+.home-screen.hidden {
+  display: none;
+}
+
+.home-container {
+  width: 80%;
+  height: 80%;
+  max-width: 800px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 40px;
+  overflow: hidden;
+  box-shadow: 0 30px 60px rgba(255, 255, 255, 0.15);
+  background: var(--primary-cream);
+  border: 6px solid var(--border-soft);
+}
+
+.home-background {
+  position: absolute;
+  inset: 0;
+  background-image: url('fondo.png'); /* Imagen de fondo aquí */
+  background-size: 80%; /* Ajustado para hacer el fondo más pequeño (puedes cambiar el porcentaje según necesites, e.g., 50% para más pequeño) */
+  background-position: 60%;
+  background-repeat: no-repeat; /* Evita que se repita si es más pequeño */
+  z-index: 1;
+}
+
+.home-background::after {
+  /* Complete the home background overlay */
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+  z-index: 2;
+  backdrop-filter: blur(1px);
+}
+
+.home-content {
+  position: relative;
+  z-index: 3;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  padding: 40px;
+
+}
+
+.play-button {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-60%, -35%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 2;
+  transition: transform 1s ease;
+  filter: drop-shadow(0 8px 16px rgba(255, 255, 255, 0.2));
+}
+
+.play-button:hover {
+  animation: wiggle 1s ease-in-out;
+  filter: drop-shadow(0 12px 24px rgba(255, 255, 255, 0.3));
+}
+
+.play-button:active {
+  transform: translate(-70%, -35%) scale(0.98);
+}
+
+@keyframes wiggle {
+  0% { transform: translate(-60%, -35%) rotate(0deg); }
+  25% { transform: translate(-60%, -35%) rotate(-3deg); }
+  50% { transform: translate(-60%, -35%) rotate(0deg); }
+  75% { transform: translate(-60%, -35%) rotate(3deg); }
+  100% { transform: translate(-60%, -35%) rotate(0deg); }
+}
+
+.play-button img {
+  max-width: 1020px; /* Tamaño ajustado como ejemplo */
+  max-height: 640px;
+  width: auto;
+  height: auto;
+  display: block;
+  image-rendering: pixelated;
+}
+
+.game-screen {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+.game-screen.hidden {
+  display: none !important;
+}

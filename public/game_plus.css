@@ -1,0 +1,223 @@
+/* Feminine styling for UI elements */
+
+#scorebar {
+  position: relative;
+  margin: 6px auto 4px;
+  width: min(860px, 92vw);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: "Press Start 2P", monospace;
+  color: #6b5b7f;
+}
+
+#scorebar .chip {
+  display: inline-block;
+  padding: 6px 10px;
+  border: 2px solid #d8b5d3;
+  background: rgba(245, 212, 232, 0.6);
+  border-radius: 10px;
+  font-size: 12px;
+  line-height: 1;
+  color: #6b5b7f;
+  box-shadow: 0 4px 8px rgba(232, 76, 122, 0.1);
+}
+
+#scorebar .title {
+  opacity: 0.85;
+}
+#scorebar .best {
+  color: #e84c7a;
+  font-weight: bold;
+}
+
+/* Quest/event badges with soft styling */
+#qebar {
+  position: relative;
+  margin: 0 auto 6px;
+  width: min(860px, 92vw);
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.badge {
+  font-family: inherit;
+  font-size: 10px;
+  color: #6b5b7f;
+  background: rgba(245, 212, 232, 0.5);
+  border: 2px solid #d8b5d3;
+  padding: 4px 8px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(232, 76, 122, 0.1);
+  transition: all 0.2s ease;
+}
+
+.badge:hover {
+  background: rgba(245, 212, 232, 0.8);
+  box-shadow: 0 4px 10px rgba(232, 76, 122, 0.15);
+}
+
+.badge.done {
+  color: #a5d89e;
+  border-color: #a5d89e;
+  background: rgba(181, 232, 197, 0.2);
+}
+
+/* Particles with soft colors */
+.fx {
+  position: absolute;
+  left: 50%;
+  bottom: 36px;
+  transform: translateX(-50%);
+  font-family: "Press Start 2P", monospace;
+  font-size: 11px;
+  pointer-events: none;
+  font-weight: bold;
+}
+
+.fx.up {
+  color: #a5d89e;
+}
+.fx.down {
+  color: #f5a5b0;
+}
+
+@keyframes fxFloat {
+  from {
+    transform: translate(-50%, 0);
+    opacity: 1;
+  }
+  to {
+    transform: translate(-50%, -26px);
+    opacity: 0;
+  }
+}
+
+.fx {
+  animation: fxFloat 0.9s ease-out forwards;
+}
+
+/* Animation for hero blinking */
+@keyframes blink {
+  0%,
+  92%,
+  100% {
+    transform: scaleY(1);
+  }
+  96% {
+    transform: scaleY(0.05);
+  }
+}
+
+.sunglasses .eyes,
+#alon8 .eyes {
+  transform-origin: center;
+  animation: blink 5s infinite;
+}
+
+@keyframes typeL {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+@keyframes typeR {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(3px);
+  }
+}
+
+#alon-character.typing .arm.left,
+#alon8.typing .arm.left {
+  animation: typeL 0.18s steps(2) infinite;
+}
+
+#alon-character.typing .arm.right,
+#alon8.typing .arm.right {
+  animation: typeR 0.18s steps(2) infinite;
+}
+
+@keyframes banGlare {
+  0% {
+    opacity: 0;
+  }
+  30% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+#alon-character .glare,
+#alon8 .glare {
+  opacity: 0;
+}
+#alon-character.ban .glare,
+#alon8.ban .glare {
+  animation: banGlare 0.25s linear 1;
+}
+
+.hud-text {
+  width: auto;
+}
+
+/* Music button with soft styling */
+#ux-music {
+  position: relative;
+}
+
+#vol-pop {
+  position: absolute;
+  right: 0;
+  top: 44px;
+  display: none;
+  z-index: 20;
+  background: linear-gradient(135deg, #f5d4e8, #e8d5f2);
+  border: 2px solid #d8b5d3;
+  padding: 8px;
+  white-space: nowrap;
+  border-radius: 12px;
+  box-shadow: 0 8px 16px rgba(107, 91, 127, 0.15);
+}
+
+#vol-pop.open {
+  display: block;
+}
+
+#vol-pop .vbtn {
+  display: inline-block;
+  min-width: 28px;
+  padding: 4px 8px;
+  margin: 0 2px;
+  text-align: center;
+  border: 2px solid #d8b5d3;
+  background: rgba(245, 212, 232, 0.6);
+  color: #6b5b7f;
+  cursor: pointer;
+  user-select: none;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  font-size: 11px;
+}
+
+#vol-pop .vbtn:hover {
+  background: rgba(232, 76, 122, 0.2);
+  border-color: #e84c7a;
+}
+
+#vol-pop .vlabel {
+  font-size: 11px;
+  color: #6b5b7f;
+  margin-right: 6px;
+  font-weight: bold;
+}
