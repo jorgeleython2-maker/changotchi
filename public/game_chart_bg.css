@@ -1,0 +1,47 @@
+/* game_chart_bg.css — places a blurred candlestick canvas behind the scene */
+#screen{
+  position: relative;
+}
+#bg-chart{
+  position: absolute;
+  inset: 0;
+  z-index: 0;                 /* under character & HUD */
+  filter: blur(2px) opacity(0.55);
+  image-rendering: pixelated; /* keep crisp edges under blur */
+  pointer-events: none;
+}
+/* ensure existing layers are above */
+#alon-character, .hud-text, #market-cap, #event-log { position: relative; z-index: 2; }
+
+/* ==== СЛОИ ЭКРАНА: чарт снизу, персонаж/HUD сверху ==== */
+#screen { position: relative; }
+
+#bg-chart {
+  position: absolute;
+  inset: 0;
+  z-index: 0;                 /* всегда ниже всего остального */
+  filter: blur(2px) opacity(0.55);
+  image-rendering: pixelated;
+  pointer-events: none;
+}
+
+/* Бэкграунд-слои чуть выше чарта */
+#screen .grid,
+#screen .stars,
+#screen .crt-scanline,
+#screen .vignette {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Персонаж и HUD поверх всего */
+#alon-character,
+#alon8,
+.hud-text,
+#market-cap,
+#event-log {
+  position: relative;
+  z-index: 2;
+}
